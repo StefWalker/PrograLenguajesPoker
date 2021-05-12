@@ -1,8 +1,10 @@
 /*
- * Card.h
- *
- *  Created on: 2 may. 2021
- *      Author: dylan
+ ============================================================================
+ Name        : LenguajesPrograC.c
+ Author      : Dylan, Sebastian, Jose, Heyler
+ Version     : 1.0
+ Description : Probability counter in poker hands
+ ============================================================================
  */
 
 #ifndef CARD_H_

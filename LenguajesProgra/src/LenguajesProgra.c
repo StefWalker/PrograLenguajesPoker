@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Main variables created for the probabilities data
 struct Card cards[52];
 
 int DosParejas = 0;
@@ -26,10 +27,10 @@ int EscaleraReal = 0;
 void DeckFiller(){
 	int card = 1; // Card number
 	int type = 1; // Card group
-	for(int i = 0; i < 52; i++){
+	for(int i = 0; i < 52; i++){ // For in charge of filling the data for each card
 		cards[i].value = card ;
 		cards[i].type = type ;
-		cards[i].picked = F;
+		cards[i].picked = F;	 // Value used to know if it was picked or not
 		card++;
 		if(card == 14){
 			card = 1;
@@ -43,16 +44,16 @@ void DeckFiller(){
  * Outputs: None
  * */
 void Shuffle(){
-	size_t n = sizeof(cards)/sizeof(cards[0]);
-    if (n > 1)
+	size_t n = sizeof(cards)/sizeof(cards[0]); // Size of the deck
+    if (n > 1)								   // Main structure
     {
         size_t i;
         for (i = 0; i < n - 1; i++)
         {
-          size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+          size_t j = i + rand() / (RAND_MAX / (n - i) + 1);	// Selects random card
           int t = cards[j].value;
           int k = cards[j].type;
-          cards[j].value = cards[i].value;
+          cards[j].value = cards[i].value;					// In witch the data is swaped with another one
           cards[j].type = cards[i].type;
           cards[i].value = t;
           cards[i].type = k;
@@ -60,7 +61,7 @@ void Shuffle(){
     }
 }
 
-/* Funcion:
+/* Funcion: Used only to check the data of the cards
  * Inputs: None
  * Outputs: None
  * */
@@ -73,24 +74,24 @@ void PrintTest(){
 	}
 }
 
-/* Funcion:
- * Inputs:
- * Outputs:
+/* Funcion: Important function of the system this one will check the cards data to verify the hand and what type it is
+ * Inputs: Cards array
+ * Outputs: None
  * */
-void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in second value
+void HandCheck(struct Card hand[5]){
 	int data = 0; //Used as a boolean
-	int count1 = 0, count2 = 0, counter = 0;
-	if (hand[0].type == hand[1].type == hand[2].type == hand[3].type == hand[4].type )
+	int count1 = 0, count2 = 0, counter = 0;										   // Counters used to keep track of the data
+	if (hand[0].type == hand[1].type == hand[2].type == hand[3].type == hand[4].type ) // Verification process for the search of a Royal Flush
 	{
 		if ((hand[0].value == 13) && (hand[1].value ==12) && (hand[2].value ==11) && (hand[3].value == 10) && (hand[4].value == 1))
 		{
 			EscaleraReal++;
 		}
 	}
-	if(hand[0].value != hand[1].value){
+	if(hand[0].value != hand[1].value){							// Validation in the entry of data
 		counter++;
 	}
-	if (hand[counter].value == hand[counter+1].value){
+	if (hand[counter].value == hand[counter+1].value){			// If with a while for the search of a trio or poker in hand
 		count1++;
 		counter++;
 		while(data == 0){
@@ -104,7 +105,7 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 			}
 		}
 	}
-	if(1 <= count1 && count1 < 3){
+	if(1 <= count1 && count1 < 3){							   // Used only for a search of a second duo or a trio
 		if(hand[counter].value == hand[counter+1].value){
 			count2++;
 			counter++;
@@ -117,6 +118,7 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 			counter++;
 		}
 	}
+									// Conditions directed for the adiction in the counter for hands searched
 	if (count1== 1 && count2 == 1)
 	{
 		DosParejas++;
@@ -131,14 +133,14 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 	}
 }
 
-/* Funcion:
- * Inputs:
- * Outputs:
+/* Funcion: Function with the objective of sorting the cards throgh bubble sort
+ * Inputs: Cards array
+ * Outputs: None
  * */
 void SortCards(struct Card hand[5]){
-	for(int i = 0; i < 5; i++){
+	for(int i = 0; i < 5; i++){					// Main structure for a bubble sort
 	   for(int j = 0; j < 5; j++){
-	        if(hand[i].value > hand[j].value){
+	        if(hand[i].value > hand[j].value){	// Consisting in sorting the value and type of the card
 	              // swap
 	              int tmpV = hand[j].value;
 				  int tmpT = hand[j].type;
@@ -153,9 +155,9 @@ void SortCards(struct Card hand[5]){
 	HandCheck(hand);
 }
 
-/* Funcion:
- * Inputs:
- * Outputs:
+/* Funcion: Reset for the boolean state in the cards
+ * Inputs: None
+ * Outputs: None
  * */
 void ResetCards(){
 	for (int i = 0; i < 52; i++)
@@ -164,19 +166,19 @@ void ResetCards(){
 	}
 }
 
-/* Funcion:
- * Inputs:
- * Outputs:
+/* Funcion: In charge of generating a new random card from the shuffled deck
+ * Inputs: None
+ * Outputs: None
  * */
 void HandGenerator(){
-	struct Card hand[5];
+	struct Card hand[5];					// Array of cards for the new hand to generate
 	int gen = 0;
 	for(int i = 0; i < 5; i++){
-		gen = rand() % 52;
-		hand[i].value = cards[gen].value;
+		gen = rand() % 52;					// Random card in the deck
+		hand[i].value = cards[gen].value;	// Copy of the data of the card
 		hand[i].type = cards[gen].type;
 
-		if(cards[gen].picked == T){
+		if(cards[gen].picked == T){			// If to check if the card was or not alredy picked
 			i--;
 		}else{
 			cards[gen].picked = T;
@@ -186,17 +188,17 @@ void HandGenerator(){
 	SortCards(hand);
 }
 
-/* Funcion:
- * Inputs:
- * Outputs:
+/* Funcion: Main function of the system in charge of showing all the data about the probabilities of the Poker hands
+ * Inputs: None
+ * Outputs: None
  * */
 int main(void) {
 
-    srand(time(NULL));
+    srand(time(NULL));				// Seed to generate the best random escenario
 
-    DeckFiller();
+    DeckFiller();					// Start of the filling process
 
-    int m = 100, n = 10;
+    int m = 100, n = 10;			// Parameters for the code
     int cycles = 0;
     int hands = 0;
     /*
@@ -211,15 +213,15 @@ int main(void) {
         printf("\nEnter value between 1 to 5: ");
         scanf("%d", &n);
     }*/
-    while (cycles<m)
+    while (cycles<m)			// Main cycle of the code
     {
-        Shuffle();
+        Shuffle();				// Deck Shuffle
         while (hands<n)
         {
-            HandGenerator();
+            HandGenerator();	// Generate new hand
             hands++;
         }
-        ResetCards();
+        ResetCards();			// Resest picked state of the cards
         cycles++;
         hands=0;
     }
