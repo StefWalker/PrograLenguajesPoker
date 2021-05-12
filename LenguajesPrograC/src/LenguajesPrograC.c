@@ -10,6 +10,7 @@
 #include "Card.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 int DosParejas = 0;
 int Poker = 0;
@@ -221,6 +222,20 @@ void HandGenerator(){
 	SortCards(hand);
 }
 
+/* Funcion: Reset to False picked cards
+ * Inputs:
+ * Outputs:
+ * */
+
+void ResetCards(){
+	for (int i = 0; i < 52; i++)
+	{
+		cards[i].picked = F;
+	}
+	
+}
+
+
 /* Funcion:
  * Inputs:
  * Outputs:
@@ -252,7 +267,7 @@ int main(void) {
 		while (hands<n)
 		{
 			
-			HandGeneratorTrio();
+			HandGenerator();
 			hands++;
 		}
 		ResetCards();
