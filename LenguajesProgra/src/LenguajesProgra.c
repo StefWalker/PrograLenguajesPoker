@@ -87,13 +87,6 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 			EscaleraReal++;
 		}
 	}
-	/*
-	hand[0].value = 6;
-	hand[1].value = 2;
-	hand[2].value = 2;
-	hand[3].value = 1;
-	hand[4].value = 1;
-	*/
 	if(hand[0].value != hand[1].value){
 		counter++;
 	}
@@ -135,11 +128,7 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 	if (count1 == 3)
 	{
 		Poker++;
-	}/*
-	printf("%d", count1);
-	printf("  ");
-	printf("%d", count2);
-	printf("\n");*/
+	}
 }
 
 /* Funcion:
@@ -161,20 +150,18 @@ void SortCards(struct Card hand[5]){
 	     }
 	 }
 
-
-/*
-	for(int i = 0; i < 5; i++){
-		printf("%d", hand[i].value);
-		printf("  ");
-	}
-	printf("\n");
-	for(int i = 0; i < 5; i++){
-		printf("%d", hand[i].type);
-		printf("  ");
-	}
-	printf("\n");*/
-
 	HandCheck(hand);
+}
+
+/* Funcion:
+ * Inputs:
+ * Outputs:
+ * */
+void ResetCards(){
+	for (int i = 0; i < 52; i++)
+	{
+		cards[i].picked = F;
+	}
 }
 
 /* Funcion:
@@ -188,33 +175,15 @@ void HandGenerator(){
 		gen = rand() % 52;
 		hand[i].value = cards[gen].value;
 		hand[i].type = cards[gen].type;
-		/*
+
 		if(cards[gen].picked == T){
 			i--;
 		}else{
 			cards[gen].picked = T;
-		}*/
-	}/*
-	printf("\n");
-	for(int i = 0; i < 5; i++){
-		printf("%d", hand[i].value);
-		printf("  ");
+		}
 	}
-	printf("\n");*/
-
+	ResetCards();
 	SortCards(hand);
-}
-
-/* Funcion:
- * Inputs:
- * Outputs:
- * */
-void ResetCards(){
-	for (int i = 0; i < 52; i++)
-	{
-		cards[i].picked = F;
-	}
-
 }
 
 /* Funcion:
