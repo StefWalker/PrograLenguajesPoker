@@ -10,11 +10,11 @@
 #ifndef CARD_H_
 #define CARD_H_
 
-typedef enum { F, T } boolean;
+typedef enum { F, T } boolean; // Added for the use of booleans
 
-/* Funcion:
- * Inputs:
- * Outputs:
+/* Funcion: Struct for the cards
+ * Inputs: None
+ * Outputs: None
  * */
 struct Card{
 	int value;
