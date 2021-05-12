@@ -10,8 +10,14 @@
 #include "Card.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 struct Card cards[52];
+
+int DosParejas = 0;
+int Poker = 0;
+int Full = 0;
+int EscaleraReal = 0;
 
 /* Funcion: Filler de deck of cards
  * Inputs: None
@@ -81,72 +87,53 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 			//EscaleraReal++;
 		}
 	}
-	else{
+	if(hand[0].value != hand[1].value){
+		counter++;
+	}
+	if (hand[counter].value == hand[counter+1].value){
+		count1++;
+		counter++;
 		while(data == 0){
 			if(hand[counter].value == hand[counter+1].value){
 				count1++;
 				counter++;
 			}
-			if(count1 == 0 && counter == 0){
-				counter++;
-			}
 			else{
-				counter++;
 				data = 1;
-			}
-		}
-		if(count1 != 3){
-			data = 0;
-			while(data == 0){
-				if(hand[counter].value == hand[counter+1].value){
-					count2++;
-					counter++;
-				}
-				if(counter >= 3){
-					data = 1;
-				}
 				counter++;
 			}
 		}
-	}/*
+	}
+	if(1 <= count1 < 3){
+		if(hand[counter].value == hand[counter+1].value){
+			count2++;
+			counter++;
+			if(hand[counter].value == hand[counter+1].value){
+				count2++;
+				counter++;
+			}
+		}
+	}
 	if (count1== 1 && count2 == 1)
 	{
 		DosParejas++;
 
 	}
-	if (count1== 2 && count2 == 1)
+	if ((count1 == 2 && count2 == 1) || (count1 == 1 && count2 == 2))
 	{
 		Full++;
 
 	}
-	if (count1== 3)
+	if (count1 == 3)
 	{
 		Poker++;
 
-	}*/
+	}
 	printf("%d", count1);
 	printf("  ");
 	printf("%d", count2);
 	printf("\n");
 }
-
-/* Funcion:
- * Inputs:
- * Outputs:
- * */
-/*void SortCardss(){
-	for(int i = 0; i < 5; i++){
-	   for(int j = 0; j < 5; j++){
-	        if(cards[i].value > cards[j].value){
-	              // swap
-	              int tmp = cards[j].value;
-	              cards[j].value = cards[i].value;
-	              cards[i].value = tmp;
-	         }
-	     }
-	 }
-}
-*/
 
 /* Funcion:
  * Inputs:
@@ -183,28 +170,6 @@ void SortCards(struct Card hand[5]){
 	HandCheck(hand);
 }
 
-/*
-void SortCards(struct Card hand[5]){
-	for(int i = 0; i < 5; i++){
-	   for(int j = 0; j < 5; j++){
-	        if(hand[i].value > hand[j].value){
-	              // swap
-	              int tmp = hand[j].value;
-	              hand[j].value = hand[i].value;
-	              hand[i].value = tmp;
-	         }
-	     }
-	 }
-
-	for(int i = 0; i < 5; i++){
-		printf("%d", hand[i].value);
-		printf("  ");
-	}
-	printf("\n");
-
-	HandCheck(hand);
-}*/
-
 /* Funcion:
  * Inputs:
  * Outputs:
@@ -234,6 +199,18 @@ void HandGenerator(){
 
 
 	SortCards(hand);
+}
+
+/* Funcion:
+ * Inputs:
+ * Outputs:
+ * */
+void ResetCards(){
+	for (int i = 0; i < 52; i++)
+	{
+		cards[i].picked = F;
+	}
+
 }
 
 /* Funcion:
