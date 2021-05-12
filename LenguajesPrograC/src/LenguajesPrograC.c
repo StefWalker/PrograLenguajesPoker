@@ -11,12 +11,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int DosParejas = 0;
-int Poker = 0;
-int Full = 0;
-int EscaleraReal = 0;
-
-
 struct Card cards[52];
 
 /* Funcion: Filler de deck of cards
@@ -84,7 +78,7 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 	{
 		if ((hand[0].value == 13) && (hand[1].value ==12) && (hand[2].value ==11) && (hand[3].value == 10) && (hand[4].value == 1))
 		{
-			EscaleraReal++;
+			//EscaleraReal++;
 		}
 	}
 	else{
@@ -114,7 +108,7 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 				counter++;
 			}
 		}
-	}
+	}/*
 	if (count1== 1 && count2 == 1)
 	{
 		DosParejas++;
@@ -129,14 +123,35 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 	{
 		Poker++;
 
-	}
+	}*/
 	printf("%d", count1);
 	printf("  ");
 	printf("%d", count2);
 	printf("\n");
 }
 
+/* Funcion:
+ * Inputs:
+ * Outputs:
+ * */
+/*void SortCardss(){
+	for(int i = 0; i < 5; i++){
+	   for(int j = 0; j < 5; j++){
+	        if(cards[i].value > cards[j].value){
+	              // swap
+	              int tmp = cards[j].value;
+	              cards[j].value = cards[i].value;
+	              cards[i].value = tmp;
+	         }
+	     }
+	 }
+}
+*/
 
+/* Funcion:
+ * Inputs:
+ * Outputs:
+ * */
 void SortCards(struct Card hand[5]){
 	for(int i = 0; i < 5; i++){
 	   for(int j = 0; j < 5; j++){
@@ -228,49 +243,21 @@ void HandGenerator(){
 int main(void) {
 
 	srand(time(NULL));
+	/*int m, n;
 
-	DeckFiller();
-
-	int m=1, n=1;
-	int cycles =0;
-	int hands =0;
-	/*
 	printf("Enter value for M (Cycles): ");
 	scanf("%d", &m);
-	printf("\nEnter value for N (hands per cycle) between 1 to 5: ");
+	printf("\nEnter value for N (hands per cycle): ");
 	scanf("%d", &n);
-	*/
-	while (n>5)
-	{
-		printf("\nMax value is 5");
-		printf("\nEnter value between 1 to 5: ");
-		scanf("%d", &n);
-	}
-	while (cycles<m)
-	{
-		//Shuffle();
-		while (hands<n)
-		{
-			
-			HandGeneratorTrio();
-			hands++;
-		}
-		ResetCards();
-		cycles++;
-		hands=0;
-	}
-	printf("Dos Parejas: ");
-	printf("%d",DosParejas);
-	printf("\n");
-	printf("Pokers: ");
-	printf("%d", Poker);
-	printf("\n");
-	printf("Fulls: ");
-	printf("%d", Full);
-	printf("\n");
-	printf("Escaleras Reales: ");
-	printf("%d", EscaleraReal);
-	
+
+	for(int i = 0; i < 52; i++){
+
+	}*/
+
+	DeckFiller();
+	Shuffle();
+	HandGenerator();
+
 	return EXIT_SUCCESS;
 }
 
