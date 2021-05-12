@@ -84,7 +84,7 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 	{
 		if ((hand[0].value == 13) && (hand[1].value ==12) && (hand[2].value ==11) && (hand[3].value == 10) && (hand[4].value == 1))
 		{
-			//EscaleraReal++;
+			EscaleraReal++;
 		}
 	}
 	/*
@@ -135,11 +135,11 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 	if (count1 == 3)
 	{
 		Poker++;
-	}
+	}/*
 	printf("%d", count1);
 	printf("  ");
 	printf("%d", count2);
-	printf("\n");
+	printf("\n");*/
 }
 
 /* Funcion:
@@ -162,7 +162,7 @@ void SortCards(struct Card hand[5]){
 	 }
 
 
-
+/*
 	for(int i = 0; i < 5; i++){
 		printf("%d", hand[i].value);
 		printf("  ");
@@ -172,7 +172,7 @@ void SortCards(struct Card hand[5]){
 		printf("%d", hand[i].type);
 		printf("  ");
 	}
-	printf("\n");
+	printf("\n");*/
 
 	HandCheck(hand);
 }
@@ -186,24 +186,21 @@ void HandGenerator(){
 	int gen = 0;
 	for(int i = 0; i < 5; i++){
 		gen = rand() % 52;
-		printf("%d", gen);
-		printf("  ");
 		hand[i].value = cards[gen].value;
 		hand[i].type = cards[gen].type;
-
+		/*
 		if(cards[gen].picked == T){
 			i--;
 		}else{
 			cards[gen].picked = T;
-		}
-	}
+		}*/
+	}/*
 	printf("\n");
 	for(int i = 0; i < 5; i++){
 		printf("%d", hand[i].value);
 		printf("  ");
 	}
-	printf("\n");
-
+	printf("\n");*/
 
 	SortCards(hand);
 }
@@ -230,36 +227,36 @@ int main(void) {
 
     DeckFiller();
 
-    int m=1, n=1;
-    int cycles =0;
-    int hands =0;
+    int m = 100, n = 10;
+    int cycles = 0;
+    int hands = 0;
     /*
     printf("Enter value for M (Cycles): ");
     scanf("%d", &m);
     printf("\nEnter value for N (hands per cycle) between 1 to 5: ");
     scanf("%d", &n);
-    */
-    while (n>5)
+
+    while (n>10000)
     {
         printf("\nMax value is 5");
         printf("\nEnter value between 1 to 5: ");
         scanf("%d", &n);
-    }
+    }*/
     while (cycles<m)
     {
-        //Shuffle();
+        Shuffle();
         while (hands<n)
         {
-
-            HandGeneratorTrio();
+            HandGenerator();
             hands++;
         }
         ResetCards();
         cycles++;
         hands=0;
     }
+
     printf("Dos Parejas: ");
-    printf("%d",DosParejas);
+    printf("%d", DosParejas);
     printf("\n");
     printf("Pokers: ");
     printf("%d", Poker);
