@@ -226,21 +226,49 @@ void ResetCards(){
  * */
 int main(void) {
 
-	srand(time(NULL));
-	/*int m, n;
+    srand(time(NULL));
 
-	printf("Enter value for M (Cycles): ");
-	scanf("%d", &m);
-	printf("\nEnter value for N (hands per cycle): ");
-	scanf("%d", &n);
+    DeckFiller();
 
-	for(int i = 0; i < 52; i++){
+    int m=1, n=1;
+    int cycles =0;
+    int hands =0;
+    /*
+    printf("Enter value for M (Cycles): ");
+    scanf("%d", &m);
+    printf("\nEnter value for N (hands per cycle) between 1 to 5: ");
+    scanf("%d", &n);
+    */
+    while (n>5)
+    {
+        printf("\nMax value is 5");
+        printf("\nEnter value between 1 to 5: ");
+        scanf("%d", &n);
+    }
+    while (cycles<m)
+    {
+        //Shuffle();
+        while (hands<n)
+        {
 
-	}*/
+            HandGeneratorTrio();
+            hands++;
+        }
+        ResetCards();
+        cycles++;
+        hands=0;
+    }
+    printf("Dos Parejas: ");
+    printf("%d",DosParejas);
+    printf("\n");
+    printf("Pokers: ");
+    printf("%d", Poker);
+    printf("\n");
+    printf("Fulls: ");
+    printf("%d", Full);
+    printf("\n");
+    printf("Escaleras Reales: ");
+    printf("%d", EscaleraReal);
 
-	DeckFiller();
-	Shuffle();
-	HandGenerator();
-
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
