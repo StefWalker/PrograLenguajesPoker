@@ -87,6 +87,13 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 			//EscaleraReal++;
 		}
 	}
+	/*
+	hand[0].value = 6;
+	hand[1].value = 2;
+	hand[2].value = 2;
+	hand[3].value = 1;
+	hand[4].value = 1;
+	*/
 	if(hand[0].value != hand[1].value){
 		counter++;
 	}
@@ -104,30 +111,30 @@ void HandCheck(struct Card hand[5]){ // Second number can't count to 3 or 4 in s
 			}
 		}
 	}
-	if(1 <= count1 < 3){
+	if(1 <= count1 && count1 < 3){
 		if(hand[counter].value == hand[counter+1].value){
 			count2++;
 			counter++;
-			if(hand[counter].value == hand[counter+1].value){
-				count2++;
-				counter++;
-			}
+		}else{
+			counter++;
+		}
+
+		if(hand[counter].value == hand[counter+1].value){
+			count2++;
+			counter++;
 		}
 	}
 	if (count1== 1 && count2 == 1)
 	{
 		DosParejas++;
-
 	}
 	if ((count1 == 2 && count2 == 1) || (count1 == 1 && count2 == 2))
 	{
 		Full++;
-
 	}
 	if (count1 == 3)
 	{
 		Poker++;
-
 	}
 	printf("%d", count1);
 	printf("  ");
