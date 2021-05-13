@@ -22,6 +22,10 @@ struct Card{
 	boolean picked;
 } card;
 
+/* Funcion: Struct for the data review
+ * Inputs: None
+ * Outputs: None
+ * */
 struct Data{
 	float DpValue;
 	float FhValue;

@@ -11,12 +11,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 // Main variables created for the probabilities data
-static int m = 100, n = 1000000;			// Parameters for the code
+static int m = 30, n = 1000000;			// Parameters for the code
 
 struct Card cards[52];
-struct Data DataArray[100];
+struct Data DataArray[30];
 
 float DosParejas = 0;
 float Poker = 0;
@@ -200,13 +201,14 @@ void HandGenerator(){
 	SortCards(hand);
 }
 
-/* Funcion:
- * Inputs:
- * Outputs:
+/* Funcion: Function used to make the calculation of the variance
+ * Inputs: float media_aritmetica, int type
+ * Outputs: float valor de varianza
  * */
 float varianza(float media_aritmetica, int type) {
 	float media = media_aritmetica;
 	float var = 0;
+	float N = m;
 	if(type == 0){
 		for (int i = 0; i < m; i++) {
 			var += pow(DataArray[i].DpValue - media, 2);
@@ -227,7 +229,7 @@ float varianza(float media_aritmetica, int type) {
 			var += pow(DataArray[i].RFValue - media, 2);
 		}
 	}
-	var /= m;
+	var = var/N;
 	return var;
 }
 
@@ -275,6 +277,9 @@ int main(void) {
     printf("  Probabilidad teorica para este caso: ");
     printf("%.6f", n/20.0 );
     printf("\n");
+    printf("Error: ");
+    printf("%.6f", (n/20.0) - testvariable );
+    printf("\n");
     printf("Varianza: ");
     printf("%.6f", varianza(testvariable, 0));
     printf("\n");
@@ -285,6 +290,9 @@ int main(void) {
     printf("%.6f", testvariable);
     printf("  Probabilidad teorica para este caso: ");
     printf("%.6f", n/693.17 );
+    printf("\n");
+    printf("Error: ");
+    printf("%.6f", (n/693.17) - testvariable );
     printf("\n");
     printf("Varianza: ");
     printf("%.6f", varianza(testvariable, 1));
@@ -297,6 +305,9 @@ int main(void) {
     printf("  Probabilidad teorica para este caso: ");
     printf("%.6f", n/4165.0 );
     printf("\n");
+    printf("Error: ");
+    printf("%.6f", (n/4165.0) - testvariable );
+    printf("\n");
     printf("Varianza: ");
     printf("%.6f", varianza(testvariable, 2));
     printf("\n");
@@ -307,6 +318,9 @@ int main(void) {
     printf("%.6f", testvariable);
     printf("  Probabilidad teorica para este caso: ");
     printf("%.6f", n/649739.0 );
+    printf("\n");
+    printf("Error: ");
+    printf("%.6f", (n/649739.0) - testvariable );
     printf("\n");
     printf("Varianza: ");
     printf("%.6f", varianza(testvariable, 3));
