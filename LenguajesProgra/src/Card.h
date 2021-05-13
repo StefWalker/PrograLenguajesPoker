@@ -22,5 +22,10 @@ struct Card{
 	boolean picked;
 } card;
 
-
+struct Data{
+	float DpValue;
+	float FhValue;
+	float PValue;
+	float RFValue;
+} data;
 #endif /* CARD_H_ */

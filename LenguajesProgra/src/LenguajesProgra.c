@@ -13,12 +13,20 @@
 #include <time.h>
 
 // Main variables created for the probabilities data
-struct Card cards[52];
+static int m = 100, n = 1000000;			// Parameters for the code
 
-int DosParejas = 0;
-int Poker = 0;
-int Full = 0;
-int EscaleraReal = 0;
+struct Card cards[52];
+struct Data DataArray[100];
+
+float DosParejas = 0;
+float Poker = 0;
+float Full = 0;
+float EscaleraReal = 0;
+
+float CicleDP = 0;
+float CicleP = 0;
+float CicleFH = 0;
+float CicleER = 0;
 
 /* Funcion: Filler de deck of cards
  * Inputs: None
@@ -86,6 +94,7 @@ void HandCheck(struct Card hand[5]){
 		if ((hand[0].value == 13) && (hand[1].value ==12) && (hand[2].value ==11) && (hand[3].value == 10) && (hand[4].value == 1))
 		{
 			EscaleraReal++;
+			CicleER++;
 		}
 	}
 	if(hand[0].value != hand[1].value){							// Validation in the entry of data
@@ -122,14 +131,17 @@ void HandCheck(struct Card hand[5]){
 	if (count1== 1 && count2 == 1)
 	{
 		DosParejas++;
+		CicleDP++;
 	}
 	if ((count1 == 2 && count2 == 1) || (count1 == 1 && count2 == 2))
 	{
 		Full++;
+		CicleFH++;
 	}
 	if (count1 == 3)
 	{
 		Poker++;
+		CicleP++;
 	}
 }
 
@@ -188,6 +200,37 @@ void HandGenerator(){
 	SortCards(hand);
 }
 
+/* Funcion:
+ * Inputs:
+ * Outputs:
+ * */
+float varianza(float media_aritmetica, int type) {
+	float media = media_aritmetica;
+	float var = 0;
+	if(type == 0){
+		for (int i = 0; i < m; i++) {
+			var += pow(DataArray[i].DpValue - media, 2);
+		}
+	}
+	if(type == 1){
+		for (int i = 0; i < m; i++) {
+			var += pow(DataArray[i].FhValue - media, 2);
+		}
+	}
+	if(type == 2){
+		for (int i = 0; i < m; i++) {
+			var += pow(DataArray[i].PValue - media, 2);
+		}
+	}
+	else{
+		for (int i = 0; i < m; i++) {
+			var += pow(DataArray[i].RFValue - media, 2);
+		}
+	}
+	var /= m;
+	return var;
+}
+
 /* Funcion: Main function of the system in charge of showing all the data about the probabilities of the Poker hands
  * Inputs: None
  * Outputs: None
@@ -198,23 +241,18 @@ int main(void) {
 
     DeckFiller();					// Start of the filling process
 
-    int m = 100, n = 10;			// Parameters for the code
+
     int cycles = 0;
     int hands = 0;
-    /*
-    printf("Enter value for M (Cycles): ");
-    scanf("%d", &m);
-    printf("\nEnter value for N (hands per cycle) between 1 to 5: ");
-    scanf("%d", &n);
+    float testvariable = 0;
+    float tryes = m;
 
-    while (n>10000)
-    {
-        printf("\nMax value is 5");
-        printf("\nEnter value between 1 to 5: ");
-        scanf("%d", &n);
-    }*/
     while (cycles<m)			// Main cycle of the code
     {
+    	CicleDP = 0;
+    	CicleP = 0;
+    	CicleFH = 0;
+    	CicleER = 0;
         Shuffle();				// Deck Shuffle
         while (hands<n)
         {
@@ -223,20 +261,69 @@ int main(void) {
         }
         ResetCards();			// Resest picked state of the cards
         cycles++;
-        hands=0;
+        hands = 0;
+
+        DataArray[cycles].DpValue = CicleDP;
+		DataArray[cycles].FhValue = CicleP;
+		DataArray[cycles].PValue = CicleFH;
+		DataArray[cycles].RFValue = CicleER;
     }
 
-    printf("Dos Parejas: ");
-    printf("%d", DosParejas);
+    testvariable = DosParejas/tryes;
+    printf("Media Generada para Doble Pareja: ");
+    printf("%.6f", testvariable);
+    printf("  Probabilidad teorica para este caso: ");
+    printf("%.6f", n/20.0 );
     printf("\n");
-    printf("Pokers: ");
-    printf("%d", Poker);
+    printf("Varianza: ");
+    printf("%.6f", varianza(testvariable, 0));
+    printf("\n");
+    printf("\n");
+
+    testvariable = Full/tryes;
+    printf("Media Generada para Full House: ");
+    printf("%.6f", testvariable);
+    printf("  Probabilidad teorica para este caso: ");
+    printf("%.6f", n/693.17 );
+    printf("\n");
+    printf("Varianza: ");
+    printf("%.6f", varianza(testvariable, 1));
+    printf("\n");
+    printf("\n");
+
+    testvariable = Poker/tryes;
+    printf("Media Generada para Poker: ");
+    printf("%.6f", testvariable);
+    printf("  Probabilidad teorica para este caso: ");
+    printf("%.6f", n/4165.0 );
+    printf("\n");
+    printf("Varianza: ");
+    printf("%.6f", varianza(testvariable, 2));
+    printf("\n");
+    printf("\n");
+
+    testvariable = EscaleraReal/tryes;
+    printf("Media Generada para Escalera Real: ");
+    printf("%.6f", testvariable);
+    printf("  Probabilidad teorica para este caso: ");
+    printf("%.6f", n/649739.0 );
+    printf("\n");
+    printf("Varianza: ");
+    printf("%.6f", varianza(testvariable, 3));
+    printf("\n");
+    printf("\n");
+
+    printf("Dos Parejas: ");
+    printf("%.0f", DosParejas);
     printf("\n");
     printf("Fulls: ");
-    printf("%d", Full);
+    printf("%.0f", Full);
+    printf("\n");
+    printf("Pokers: ");
+    printf("%.0f", Poker);
     printf("\n");
     printf("Escaleras Reales: ");
-    printf("%d", EscaleraReal);
+    printf("%.0f", EscaleraReal);
 
     return EXIT_SUCCESS;
 }
